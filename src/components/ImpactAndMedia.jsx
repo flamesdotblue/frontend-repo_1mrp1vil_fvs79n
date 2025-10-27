@@ -1,20 +1,21 @@
 import { BarChart3, FileText, PlayCircle, Images } from "lucide-react";
+import { useMemo, useRef, useState } from "react";
 
 export default function ImpactAndMedia() {
   return (
-    <section id="impact" className="bg-slate-50">
+    <section id="impact" className="bg-slate-950 text-white">
       <div className="mx-auto max-w-6xl px-6 py-20">
         {/* GRAPHS */}
-        <div className="mb-12 inline-flex items-center gap-2 rounded-full bg-indigo-100 px-3 py-1 text-indigo-700">
+        <div className="mb-12 inline-flex items-center gap-2 rounded-full bg-indigo-500/20 px-3 py-1 text-indigo-200">
           <BarChart3 size={16} />
           <span className="text-sm font-medium">Impact & Growth</span>
         </div>
         <div className="grid gap-6 md:grid-cols-2">
-          <div className="rounded-2xl border bg-white p-6">
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur">
             <h3 className="text-lg font-semibold">Audience Growth (YoY)</h3>
             <Graph />
           </div>
-          <div className="rounded-2xl border bg-white p-6">
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur">
             <h3 className="text-lg font-semibold">Engagement Rate</h3>
             <Graph gradientStart="#a78bfa" gradientEnd="#22d3ee" />
           </div>
@@ -28,7 +29,7 @@ export default function ImpactAndMedia() {
               (brand) => (
                 <div
                   key={brand}
-                  className="flex h-20 items-center justify-center rounded-xl border bg-white px-3 text-slate-600"
+                  className="flex h-20 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-200"
                 >
                   {brand}
                 </div>
@@ -39,7 +40,7 @@ export default function ImpactAndMedia() {
 
         {/* PDFS */}
         <div className="mt-16">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-emerald-100 px-3 py-1 text-emerald-700">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-emerald-500/20 px-3 py-1 text-emerald-200">
             <FileText size={16} />
             <span className="text-sm font-medium">Resources</span>
           </div>
@@ -64,26 +65,26 @@ export default function ImpactAndMedia() {
                 href={pdf.link}
                 target="_blank"
                 rel="noreferrer"
-                className="group flex items-center justify-between rounded-xl border bg-white p-4 hover:border-indigo-300 hover:shadow"
+                className="group flex items-center justify-between rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur transition hover:bg-white/10"
               >
                 <div>
-                  <div className="font-medium">{pdf.name}</div>
-                  <div className="text-sm text-slate-500">View PDF</div>
+                  <div className="font-medium text-white">{pdf.name}</div>
+                  <div className="text-sm text-slate-300">View PDF</div>
                 </div>
-                <FileText className="text-slate-400 group-hover:text-indigo-500" />
+                <FileText className="text-slate-300 group-hover:text-emerald-300" />
               </a>
             ))}
           </div>
         </div>
 
-        {/* VIDEOS + GLIMPSES */}
+        {/* VIDEOS + DOME GLIMPSES */}
         <div className="mt-16 grid gap-10 md:grid-cols-2">
           <div>
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-rose-100 px-3 py-1 text-rose-700">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-rose-500/20 px-3 py-1 text-rose-200">
               <PlayCircle size={16} />
               <span className="text-sm font-medium">Videos</span>
             </div>
-            <div className="aspect-video overflow-hidden rounded-xl border bg-black">
+            <div className="aspect-video overflow-hidden rounded-xl border border-white/10 bg-black">
               <iframe
                 className="h-full w-full"
                 src="https://www.youtube.com/embed/dQw4w9WgXcQ"
@@ -95,24 +96,11 @@ export default function ImpactAndMedia() {
             </div>
           </div>
           <div>
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-sky-100 px-3 py-1 text-sky-700">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-sky-500/20 px-3 py-1 text-sky-200">
               <Images size={16} />
-              <span className="text-sm font-medium">Glimpses</span>
+              <span className="text-sm font-medium">Glimpses • Dome Gallery</span>
             </div>
-            <div className="grid grid-cols-3 gap-3">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="aspect-square overflow-hidden rounded-xl border bg-white"
-                >
-                  <img
-                    src={`https://images.unsplash.com/photo-1515165562835-c3b8da8e09f9?q=80&w=800&auto=format&fit=crop`}
-                    alt="Kshitij glimpse"
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-              ))}
-            </div>
+            <DomeGallery />
           </div>
         </div>
       </div>
@@ -153,7 +141,89 @@ function Graph({ gradientStart = "#6366f1", gradientEnd = "#22c55e" }) {
           />
         ))}
       </svg>
-      <div className="mt-2 text-xs text-slate-500">Illustrative data for visual representation</div>
+      <div className="mt-2 text-xs text-slate-300">Illustrative data for visual representation</div>
+    </div>
+  );
+}
+
+function DomeGallery() {
+  const images = useMemo(
+    () =>
+      [
+        "https://images.unsplash.com/photo-1549880338-65ddcdfd017b?q=80&w=1200&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1200&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=1200&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=1200&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=1200&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1527689368864-3a821dbccc34?q=80&w=1200&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1200&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop",
+      ],
+    []
+  );
+
+  const containerRef = useRef(null);
+  const [rot, setRot] = useState({ x: -12, y: 20 });
+
+  const onMove = (e) => {
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const dx = (e.clientX - cx) / rect.width;
+    const dy = (e.clientY - cy) / rect.height;
+    setRot({ x: -12 + dy * -10, y: 20 + dx * 30 });
+  };
+
+  const radius = 180; // px ring radius
+  const rings = 3; // hemisphere rings
+  const perRing = Math.ceil(images.length / rings);
+
+  return (
+    <div
+      ref={containerRef}
+      onMouseMove={onMove}
+      className="relative h-[360px] w-full overflow-hidden rounded-xl border border-white/10 bg-white/5 backdrop-blur"
+      style={{ perspective: 800 }}
+    >
+      <div
+        className="absolute left-1/2 top-1/2 h-0 w-0"
+        style={{ transformStyle: "preserve-3d", transform: `translate(-50%, -50%) rotateX(${rot.x}deg) rotateY(${rot.y}deg)` }}
+      >
+        {Array.from({ length: rings }).map((_, ringIndex) => {
+          const ringImages = images.slice(
+            ringIndex * perRing,
+            ringIndex * perRing + perRing
+          );
+          const tilt = (ringIndex / (rings - 0.2)) * 70; // spread rings on dome
+          return (
+            <div key={ringIndex} style={{ transformStyle: "preserve-3d" }}>
+              {ringImages.map((src, i) => {
+                const angle = (i / ringImages.length) * Math.PI * 2;
+                const x = Math.cos(angle) * radius;
+                const z = Math.sin(angle) * radius;
+                return (
+                  <div
+                    key={src + i}
+                    className="absolute h-24 w-36 overflow-hidden rounded-lg border border-white/10 bg-white/10 shadow-md"
+                    style={{
+                      transformStyle: "preserve-3d",
+                      transform: `rotateX(${tilt}deg) translate3d(${x}px, ${-ringIndex * 60}px, ${z}px) rotateY(${(angle * 180) / Math.PI}deg)`,
+                    }}
+                  >
+                    <img
+                      src={src}
+                      alt="Kshitij glimpse"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          );
+        })}
+      </div>
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-slate-950 to-transparent" />
     </div>
   );
 }
